@@ -1,0 +1,113 @@
+https://cdn-icons-png.freepik.com/256/1077/1077114.png?uid=R186605635&ga=GA1.1.892483976.1721364600&semt=ais_hybrid"
+https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg
+let prompt=document.querySelector("#prompt")
+let chatContainer=document.querySelector(".chat-container")
+function createChatBox(html,classes){
+    let div=document.createElement("div")
+    div.innerHTML =html
+    div.classList.add(classes)
+    return div 
+}
+function handlechatResponse(message){
+    let html=` <img src="https://cdn-icons-png.freepik.com/256/1077/1077114.png?uid=R186605635&ga=GA1.1.892483976.1721364600&semt=ais_hybrid" alt="" id="userimage" width="50">
+    <div class="user-chat-area">${message} </div>`
+    let userChatBox=createChatBox(html,"user-chat-box")
+    chatContainer.appendChild(userChatBox)
+}
+
+prompt.addEventListener("Keydown",(e)=>{
+    if(e.Key=="Enter"){
+        handlechatResponse(prompt.value)
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let prompt=document.querySelector("#prompt")
+let chatcontainer=document.querySelector(".chat-container")
+const Api_Url ="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyC083GPuSmsFRgyxFSc_b8MfygNqS7QhKk"
+let user={
+    data:null,
+}
+
+async function  generateResponse(AIChatBox) {
+
+    let RequestOption ={
+        method:"POST",
+        headers:{'Content-Type' : 'application/json'},
+        body:JSON.stringify({
+      "contents": [
+        {
+        "parts":[{"text": user.data}  
+        ]
+        }
+    ]
+       })
+
+    }
+    try{
+   let response=await fetch(Api_Url,RequestOption)
+   let data=await response.json()
+   console.log(data);
+    }
+    catch(error){
+        console.log(error);
+    }
+    
+}
+function createChatBox(html,classes){
+    let div=document.createElement("div")
+    div.innerHTML =html
+    div.classList.add(classes)
+    return div
+}
+function handlechatResponse(message){
+    user.data=message
+let html=`<img src="https://cdn-icons-png.freepik.com/256/1077/1077114.png?uid=R186605635&ga=GA1.1.892483976.1721364600&semt=ais_hybrid" alt="" id="userimage" width="50">
+    <div class="user-chat-area">
+    ${user.data}
+    </div>`
+    prompt.value=""
+    let userChatBox=createChatBox(html,"user-chat-box")
+    chatcontainer.appendChild(userChatBox)
+    setTimeout(()=>{
+        let html=` <img src="https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg" alt="" id="AIimage" width="50">
+    <div class="AI-chat-area">
+    <img   src="img2.load.gif" alt="" class="load"  width="50px" >
+     </div>`
+    let AIChatBox=createChatBox(html,"AI-chat-box")
+    chatcontainer.appendChild(AIChatBox)
+    generateResponse(AIChatBox)
+
+    },600)
+}
+prompt.addEventListener("keydown",(e)=>{
+  if(e.key=="Enter"){
+    handlechatResponse(prompt.value)
+  }
+})
