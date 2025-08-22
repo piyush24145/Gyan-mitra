@@ -1,84 +1,95 @@
-let prompt=document.querySelector("#prompt")
-let chatcontainer=document.querySelector(".chat-container")
-let imagebtn=document.querySelector("#image")
-let imageinput=document.querySelector("#image input")
-const Api_Url ="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyC083GPuSmsFRgyxFSc_b8MfygNqS7QhKk"
-let user={
-    data:null,
-}
+let prompt = document.querySelector("#prompt");
+let chatcontainer = document.querySelector(".chat-container");
+let imagebtn = document.querySelector("#image");
+let imageinput = document.querySelector("#image input");
+let submitBtn = document.querySelector("#submit");
+const Api_Url ="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyC083GPuSmsFRgyxFSc_b8MfygNqS7QhKk";
 
-async function  generateResponse(AIChatBox) {
-    let text=AIChatBox.querySelector(".AI-chat-area")
+let user = { data: null };
 
-    let RequestOption ={
+async function generateResponse(AIChatBox) {
+    let text = AIChatBox.querySelector(".AI-chat-area");
+
+    let RequestOption = {
         method:"POST",
         headers:{'Content-Type' : 'application/json'},
         body:JSON.stringify({
-      "contents": [
-        {
-        "parts":[{"text": user.data}  
-        ]
-        }
-    ]
-       })
+          "contents": [
+            { "parts":[{"text": user.data}] }
+          ]
+        })
+    };
 
-    }
-    try{
-   let response=await fetch(Api_Url,RequestOption)
-   let data=await response.json()
-   let apiResponse= data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,"$1").trim()
-   text.innerHTML=apiResponse
-   
-    }
-    catch(error){
+    try {
+        let response = await fetch(Api_Url, RequestOption);
+        let data = await response.json();
+        let apiResponse = data.candidates[0].content.parts[0].text
+                           .replace(/\*\*(.*?)\*\*/g,"$1").trim();
+        text.innerHTML = apiResponse;
+    } catch(error) {
         console.log(error);
-    }
-    finally{
-        chatcontainer.scrollTo({top:chatcontainer.scrollHeight,behavior:"smooth"})
+        text.innerHTML = "⚠️ Error, please try again.";
+    } finally {
+        chatcontainer.scrollTo({top: chatcontainer.scrollHeight, behavior:"smooth"});
     }
 }
-function createChatBox(html,classes){
-    let div=document.createElement("div")
-    div.innerHTML =html
-    div.classList.add(classes)
-    return div
-}
-function handlechatResponse(message){
-    user.data=message
-let html=`<img src="https://cdn-icons-png.freepik.com/256/1077/1077114.png?uid=R186605635&ga=GA1.1.892483976.1721364600&semt=ais_hybrid" alt="" id="userimage" width="50">
-    <div class="user-chat-area">
-    ${user.data}
-    </div>`
-    prompt.value=""
-    let userChatBox=createChatBox(html,"user-chat-box")
-    chatcontainer.appendChild(userChatBox)
-    chatcontainer.scrollTo({top:chatcontainer.scrollHeight,behavior:"smooth"})
-    setTimeout(()=>{
-        let html=` <img src="https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg" alt="" id="AIimage" width="50">
-    <div class="AI-chat-area">
-    <img   src="img2.load.gif" alt="" class="load"  width="50px" >
-     </div>`
-    let AIChatBox=createChatBox(html,"AI-chat-box")
-    chatcontainer.appendChild(AIChatBox)
-    generateResponse(AIChatBox)
 
-    },600)
+function createChatBox(html, classes){
+    let div = document.createElement("div");
+    div.innerHTML = html;
+    div.classList.add(classes);
+    return div;
 }
+
+function handlechatResponse(message){
+    user.data = message;
+
+   
+    let html = `
+      <img src="https://cdn-icons-png.freepik.com/256/1077/1077114.png" alt="" width="50">
+      <div class="user-chat-area">${user.data}</div>
+    `;
+    prompt.value = "";
+    let userChatBox = createChatBox(html, "user-chat-box");
+    chatcontainer.appendChild(userChatBox);
+    chatcontainer.scrollTo({top: chatcontainer.scrollHeight, behavior:"smooth"});
+
+    setTimeout(()=>{
+        let html = `
+          <img src="https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg" alt="" width="50">
+          <div class="AI-chat-area">
+            <img src="img2.load.gif" alt="Loading..." class="load" width="50px">
+          </div>
+        `;
+        let AIChatBox = createChatBox(html, "AI-chat-box");
+        chatcontainer.appendChild(AIChatBox);
+        generateResponse(AIChatBox);
+    },600);
+}
+
 prompt.addEventListener("keydown",(e)=>{
-  if(e.key=="Enter"){
-    handlechatResponse(prompt.value)
+  if(e.key==="Enter" && !e.shiftKey){
+    e.preventDefault(); 
+    if(prompt.value.trim() !== ""){
+      handlechatResponse(prompt.value.trim());
+    }
   }
-})
+});
+
+submitBtn.addEventListener("click", ()=>{
+  if(prompt.value.trim() !== ""){
+    handlechatResponse(prompt.value.trim());
+  }
+});
+
 imageinput.addEventListener("change",()=>{
-const file=imageinput.files[0]
-if(!file)return
-let reader=new FileReader()
-reader.onload=(e)=>{
-    console.log(e)
-}
-reader.readAsDataURL(file)
-})
+  const file = imageinput.files[0];
+  if(!file) return;
+  let reader = new FileReader();
+  reader.onload=(e)=>{ console.log("Image uploaded:", e.target.result); }
+  reader.readAsDataURL(file);
+});
+
 imagebtn.addEventListener("click",()=>{
-    imagebtn.querySelector("input").click()
-}
-)
+  imagebtn.querySelector("input").click();
+});

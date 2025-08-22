@@ -3,22 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI chat Bot</title>
+    <title>AI Chat Bot</title>
     <link rel="stylesheet" href="bot.css">
 </head>
 <body>
-   <div class="chat-container">
-   <div id="AI-chat-box">
-    <img  src="https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg" alt="" id="AIimage" width="50">
-    <div class="AI-chat-area">Hello !I am gyanmitra How Can I Help you today ?</div>
-   </div>
-</div>
-   <div class="prompt-area">
-    <input  type="text" id="prompt" placeholder="message bot "> 
-     <button id="image"><img src="https://cdn.hugeicons.com/icons/image-02-solid-rounded.svg" alt="">
-    <input type="file"  accept="images/*"hidden></button>
-     <button id="submit"><img src="https://cdn.hugeicons.com/icons/circle-arrow-up-02-solid-standard.svg" alt=""></button>
-   </div>
-    <script  src="bot.js" ></script>
+    <div class="chat-container">
+        <div id="AI-chat-box">
+            <!-- <img src="https://www.shutterstock.com/image-vector/ai-generative-banner-concept-digital-260nw-2430158071.jpg" 
+                 alt="AI Avatar" id="AIimage" width="50"> -->
+            <div class="AI-chat-area">
+                Hello! I am GyanMitra. How can I help you today?
+            </div>
+        </div>
+    </div>
+
+    <div class="prompt-area">
+        <input type="text" id="prompt" placeholder="Message bot..."> 
+
+        <label for="imageInput" class="image-btn">
+            <img src="https://cdn.hugeicons.com/icons/image-02-solid-rounded.svg" alt="Upload Image">
+        </label>
+        <input type="file" id="imageInput" accept="image/*" hidden>
+
+        <button id="submit">
+            <img src="https://cdn.hugeicons.com/icons/circle-arrow-up-02-solid-standard.svg" alt="Send">
+        </button>
+    </div>
+
+    <script src="bot.js"></script>
 </body>
 </html>
