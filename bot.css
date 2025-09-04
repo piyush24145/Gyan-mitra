@@ -7,7 +7,8 @@
 body {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(135deg, #6a11cb, #2575fc); 
+   
+     background-image: url("360_F_766876856_XDPvm1sg90Ar5Hwf1jRRIHM4FNCXmhKj.jpg");
     display: flex;
     flex-direction: column;
 }
@@ -76,7 +77,7 @@ body {
 .user-chat-area {
     max-width: 60%;
     padding: 15px 20px;
-    background: #4cafef;
+    background: #292d30;
     color: white;
     border-radius: 20px 20px 0px 20px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -99,7 +100,7 @@ body {
 .AI-chat-area {
     max-width: 60%;
     padding: 15px 20px;
-    background: rgba(255,255,255,0.2);
+   background: #292d30;
     color: white;
     border-radius: 20px 20px 20px 0px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
