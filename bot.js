@@ -7,7 +7,8 @@ let submitBtn = document.querySelector("#submit");
 
 // ✅ Gemini API URL (replace with your valid API key if needed)
 const Api_Url =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key=AIzaSyB1Rps1rHoHl0lOpEn4pGB_gNcwAuz50DI";
+  "const Api_Url =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB1Rps1rHoHl0lOpEn4pGB_gNcwAuz50DI";
 
 let user = { data: null };
 
